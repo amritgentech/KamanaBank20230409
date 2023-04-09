@@ -1,0 +1,102 @@
+﻿@using ReconUi.Models
+@model UploadModel
+<link href="~/Content/Proj/Custom.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "File Upload";
+    ViewBag.MenuTitle = "File Upload";
+    var initializeUpload = (UploadInitializeModel)ViewBag.UploadInitializeModel;
+    int? sourceId = initializeUpload == null ? null : initializeUpload.SourceId;
+    int? subsourceId = initializeUpload == null ? null : initializeUpload.subSourceId;
+    int? subChildSourceId = initializeUpload == null ? null : initializeUpload.subChildSourceId;
+}
+<div class="card">
+    <div class="content">
+        <div class="row">
+            @using (Html.BeginForm("UploadFiles", "FileUpload", FormMethod.Post, new { id = "uploadform", enctype = "multipart/form-data" }))
+            {
+                <input type="hidden" name="SourceIdReload" id="SourceIdReload" value="@sourceId" />
+                <input type="hidden" name="SubSourceIdReload" id="SubSourceIdReload" value="@subsourceId" />
+                <input type="hidden" name="SubChildSourceIdReload" id="SubChildSourceIdReload" value="@subChildSourceId" />
+
+                <input type="hidden" name="SourceName" id="SourceName" />
+                <input type="hidden" name="SubSourceName" id="SubSourceName" />
+                <input type="hidden" name="SubSourceIdVal" id="SubSourceIdVal" />
+                <input type="hidden" name="SubChildSourceName" id="SubChildSourceName" />
+                <input type="hidden" name="SubChildSourceIdVal" id="SubChildSourceIdVal" />
+                <input type="hidden" name="FileId" id="FileId" />
+                @Html.HiddenFor(x => x.CheckReconActivate, new { @Value = ViewBag.CheckReconActivate })
+                @Html.HiddenFor(x => x.hasSubSource);
+                @Html.HiddenFor(x => x.SubSourceIdVal, new { @id = "SubSourceIdValNext" })
+
+                @Html.HiddenFor(x => x.hasSubChildSource)
+                @Html.HiddenFor(x => x.SubChildSourceIdVal, new { @id = "SubChildSourceIdValNext" })
+                <div class="col-md-12">
+                    <div class="col-md-12" style="margin-top: 42px;">
+                        <div class="form-group">
+                            @Html.DropDownListFor(model => model.SourceId, ViewBag.DrpSourceData as List<SelectListItem>, "Please Select Source", new { @id = "drpSource", @class = "form-control bindLabelControl componentWidth drpBackColor selectBox", @style = "width:300px" })
+                            @Html.ValidationMessageFor(model => model.SourceId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div id="col-md-6 SubFile">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.DropDownListFor(model => model.SubSourceId, new SelectList(Enumerable.Empty<SelectListItem>()),
+                                          "Please Select Sub Source", new { @id = "drpSubSource", @class = "form-control bindLabelControl componentWidth drpBackColor selectBox" })
+                                @Html.ValidationMessageFor(model => model.SubSourceId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div id="col-md-6 SubChildFile">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.DropDownListFor(model => model.SubChildSourceId, new SelectList(Enumerable.Empty<SelectListItem>()),
+                                          "Please Select Sub Child Source", new { @id = "drpSubChildSource", @class = "form-control bindLabelControl componentWidth drpBackColor selectBox" })
+                                @Html.ValidationMessageFor(model => model.SubChildSourceId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div id="col-md-6">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <p>Upload File</p>
+@*                                @Html.TextBoxFor(m => m.File, new { type = "file", @class = "form-control componentWidth" })*@
+                                @*                                @Html.ValidationMessageFor(m => m.File, "", new { @class = "text-danger" })*@
+                                @Html.TextBoxFor(model => model.Files, "", new { @type = "file", @multiple = "multiple" })  
+                                @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })  
+                            </div>
+                        </div>
+                    </div>
+                    <div id="col-md-6">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="submit" id="btnSubmit" class="btn btn-primary "><i class="fa fa-save"></i> Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <span class="text-danger">@Html.ValidationSummary(true)</span>
+                <div class="col-md-12" id="info"></div>
+            }
+        </div>
+    </div>
+    <div id="successNotify">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong></strong> Completed.. 
+    </div>
+    <div id="errorNotify">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong></strong> Some error occurred may be mismatched file folder..
+    </div>
+</div>
+
+<div id="FileUploadedHistoryPartial">
+</div>
+<div id="ViewTransactionsPartial">
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/proj/notify.js"></script>
+    <script src="~/Scripts/proj/upload.js"></script>
+}

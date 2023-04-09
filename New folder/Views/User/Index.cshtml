@@ -1,0 +1,29 @@
+﻿@using ReconUi.Models
+@model IdentityRelatedModel
+
+@{
+    ViewBag.Title = "User";
+    ViewBag.MenuTitle = "User";
+}
+<div class="card">
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4" style="margin-top: 23px;">
+                    @Html.ActionLink("Manage Role", "Index", "Role", null, new { @class = "btn btn-info" })
+                </div>
+                <div class="col-md-4" style="margin-top: 23px;">
+                    @Html.ActionLink("Create User", "Register", "Account", null, new { @class = "btn btn-info" })
+                </div>
+            </div>
+            <div id="userRoleTable">
+                @Html.Partial("_UserRoleTable", Model)
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/proj/notifyCustom.js"></script>
+    <script src="~/Scripts/proj/userRole.js"></script>
+}

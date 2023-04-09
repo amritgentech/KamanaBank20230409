@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Db.Model.Category>
+
+@{
+    ViewBag.Title = "Report Folders";
+    ViewBag.MenuTitle = " Report Folders";
+}
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <a href="/reportmasters/index?id=@item.Id" class="card report-list-body">
+                <div class="reoprt-title-info reoprt-title-info-inner clearfix">
+                    <img src="~/Content/images/folder1.png" style="width: 30px;" />
+
+                    <h5 class="card-title" style="margin-left: 10px; margin-bottom: 0; margin-top: 0">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </h5>
+                    @* @Html.ActionLink("Open", "ReportMasters/index", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })*@
+                    @* <a href="/reportmasters/index?id=@item.Id" class="link">VIEW</a>*@
+                </div>
+
+            </a>
+        </div>
+        <!--<div class="col-md-4">
+            <a href="/reportmasters/ViewReports?reportId=@item.Id" class="card report-list-body">
+                <div class="reoprt-title-info reoprt-title-info-inner clearfix">
+                    <img src="~/Content/images/excel.png" />
+                    <h5 class="card-title"> @Html.DisplayFor(modelItem => item.Name)</h5>
+                </div>-->
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })*@
+                @*@Html.ActionLink("View Reports", "ViewReports", new { reportId = item.Id }, new { @class = "btn btn-primary btn-sm" })*@
+
+            <!--</a>
+        </div>-->
+    }
+</div>

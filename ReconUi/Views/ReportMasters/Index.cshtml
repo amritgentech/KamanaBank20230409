@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Db.Model.ReportMaster>
+
+
+@{
+    ViewBag.Title = "Report List";
+    if (Model.Count() > 0)
+    { ViewBag.MenuTitle = " "+@Model.FirstOrDefault().Categories.Name; }
+}
+
+
+
+@*@Html.ActionLink("Create New", "Create")*@
+
+<div>
+    @Html.ActionLink("Back to Report Folders", "List", "ReportMasters", new { @class = "btn btn-primary btn-sm" })
+</div>
+<hr style=" margin-top: 15px;"/>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <a href="/reportmasters/ViewReports?reportId=@item.Id" class="card report-list-body">
+                <div class="reoprt-title-info reoprt-title-info-inner clearfix">
+                    <img src="~/Content/images/excel.png" />
+                    <h5 class="card-title"> @Html.DisplayFor(modelItem => item.Name)</h5>
+                </div>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })*@
+                @*@Html.ActionLink("View Reports", "ViewReports", new { reportId = item.Id }, new { @class = "btn btn-primary btn-sm" })*@
+
+            </a>
+        </div>
+    }
+</div>

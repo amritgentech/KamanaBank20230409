@@ -1,0 +1,60 @@
+REPORT EP-725   INCOMING INTERCHANGE                    VISANET EDIT PACKAGE                                             PAGE      1
+ SYSTEM DATE 17/12/22    RELEASE  4.00                  SALES DRAFT REVERSALS                                          CPD   17/12/22
+ MACHHAPUCHCHHRE BANK LTD                                   CENTER 470554                                               RUN NO    001
+                                                                                                                                     
+      Reversal, Sales Draft - First Presentment          ----     Required Data                                                      
+                                                                                                                                     
+ Acct Number & Extension   4705543205439572000                     Merchant ZIP Code         00000                                   
+ Floor Limit Indicator                                             Merchant State/Prov. Code                                         
+ CRB/Exception File Ind                                            Requested Payment Service                                         
+ PCAS Indicator                                                    Number of Payment Forms                                           
+ Acquirer Reference Nbr    74404497355000055039685                 Usage Code                1                                       
+ Acquirer's Business ID    00000000                                Chargeback Reason Code    00                                      
+ Purchase Date             20171220                                Settlement Flag           8                                       
+ Destination Amount        000000000200                            Auth Characteristics Ind  N                                       
+ Destination Currency Code 524                                     Authorization Code        546921                                  
+ Source Amount             000000000200                            POS Terminal Capability   5                                       
+ Source Currency Code      524                                     Cardholder ID Method      1                                       
+ Merchant Name             BOOMERANG RESTAURANT                    Collection-Only Flag                                              
+ Merchant City             POKHARA                                 POS Entry Mode            01                                      
+ Merchant Country Code     NP                                      Central Processing Date   20171221                                
+ Merchant Category Code    5812                                    Reimbursement Attribute   0                                       
+                                                                                                                                     
+      Reversal, Sales Draft - First Presentment          ----     Additional Data                                                    
+                                                                                                                                     
+ Business Format Code                                              Interface Trace Number    000000                                  
+ Token Assurance Level                                             Acceptance Terminal Ind                                           
+ Chargeback Reference Nbr  000000                                  Prepaid Card Indicator                                            
+ Documentation Indicator                                           Service Development Field 0                                       
+ Member Message Text                                               AVS Response Code                                                 
+ Special Condition Ind                                             Authorization Source Code                                         
+ Fee Program Indicator                                             Purchase Id Format                                                
+ Issuer Charge                                                     Account Selection                                                 
+ Card Acceptor ID          21403001                                Installment Payment Count                                         
+ Terminal ID               CC160094                                Purchase Identifier                                               
+ Nat'l Reimbursement Fee   000000000000                            Cashback                  000000000                               
+ Mail/Phn/Ecomm & Pymt Ind                                         Chip Condition Code                                               
+ Special Chargeback Ind                                            POS Environment                                                   
+REPORT EP-725   INCOMING INTERCHANGE                    VISANET EDIT PACKAGE                                             PAGE      2
+ SYSTEM DATE 17/12/22    RELEASE  4.00                  SALES DRAFT REVERSALS                                          CPD   17/12/22
+ MACHHAPUCHCHHRE BANK LTD                                   CENTER 470554                                               RUN NO    001
+                                                                                                                                     
+      Reversal, Sales Draft - First Presentment          ----     Payment Service Data                                               
+                                                                                                                                     
+ Transaction Identifier    000000000000000                         Merchant Volume Indicator                                         
+ Authorized Amount         000000000000                            ECommerce Goods Indicator                                         
+ Auth Currency Cd                                                  Merchant Verification Val                                         
+ Authorization Response Cd                                         Interchange Fee Amount    000000000000000                         
+ Validation Code                                                   Interchange Fee Sign                                              
+ Excluded Trans ID Rsn                                             Src to Base Curr Ex Rate  00000000                                
+ CRS Processing Code                                               Base to Dest Curr Ex Rate 00000000                                
+ Chargeback Rights Ind                                             Optional Issuer ISA Amt   000000000000                            
+ Multiple Clearing Seq Nbr 00                                      Product Id                L                                       
+ Multiple Clearing Seq Cnt 00                                      Program ID                                                        
+ Market-Specific Auth Data                                         Dynamic Currency Conv Ind                                         
+ Total Authorized Amount   000000000000                            Acct Type Identification                                          
+ Information Indicator                                             Spend Qualified Indicator                                         
+ Merchant Telephone Number                                         PAN Token                 0000000000000000                        
+ Additional Data Indicator                                         CVV2 Result Code                                                  
+                                                                                                                                     
+ TRANSACTION TOTAL RECORD COUNT                1                                                                                     

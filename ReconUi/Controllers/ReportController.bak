@@ -1,0 +1,417 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Web;
+using System.Web.Management;
+using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using AutoMapper;
+using BAL;
+using Db;
+using Db.Enum;
+using ReconUi.Models;
+using Db.Model;
+using System.Data;
+using ClosedXML;
+using ClosedXML.Excel;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Helper.Helper;
+
+
+namespace ReconUi.Controllers
+{
+    [Authorize]
+    public class ReportController : BaseController
+    {
+        #region Report View
+        private Report _Report;
+        private Recon recon;
+        public ReportController()
+        {
+            ViewBag.DrpReconTypesData = ReconBAL.GetReconList();
+            ViewBag.ReasonTypesData = ReconBAL.GetReasonList();
+        }
+        private Report InitialVal(Db.Filter _Filter)
+        {
+            _Report = new Report();
+            //            Db.Filter _Filter = new Db.Filter();
+            Summary _Summary = new Summary();
+            _Summary.Amount = _Filter.amountAccordingToStatus;
+            _Summary.Matched = _Filter.statusTotalTxnRecord;
+            _Summary.Invalid = _Filter.statusTotalTxnRecord;
+            _Summary.UnMatched = _Filter.statusTotalTxnRecord;
+            _Summary.DateDiff = _Filter.statusTotalTxnRecord;
+            _Summary.Exception = _Filter.statusTotalTxnRecord;
+            _Summary.Suspected = _Filter.statusTotalTxnRecord;
+            _Summary.Transactions = _Filter.statusTotalTxnRecord;
+            _Report._Summary = _Summary;
+            _Report._Filter = _Filter;
+
+            return _Report;
+        }
+        public ActionResult Index(Db.Filter _Filter)
+        {
+            _Report = InitialVal(_Filter);
+            return View(_Report);
+        }
+        [HttpPost]
+        public ActionResult Filter(Db.Filter _Filter)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _Report = Report.GetReportFromFilter(_Filter);
+                    return View("Index", _Report);
+                }
+                catch (Exception ex)
+                {
+                }
+            }
+            return View("Index", InitialVal(_Filter));
+        }
+        public ActionResult AjaxHandler(JQueryDataTableParamModel param, Db.Filter _Filter)
+        {
+            recon = new Recon();
+            List<VwTransactionDetailsModel> VwTransactionDetailsModels = null;
+            string[] fieldSelector = null;
+            object[] parametersArray = new object[] { _Filter };
+            object results = new object();
+            string ReconMappedMethodName = string.Empty;
+            MethodInfo method;
+
+            if (!String.IsNullOrEmpty(_Filter.ReconTypeName))
+            {
+                fieldSelector = Regex.Split(_Filter.ReconTypeName, "Vs");
+            }
+            try
+            {
+                if (_Filter.ReconType < 1)
+                {
+                    throw new ArgumentException("Recon type not selected");
+                }
+                using (var context = new Db.ReconContext())
+                {
+                    ReconMappedMethodName = context.ReconTypes.FirstOrDefault(x => x.ReconTypeId == _Filter.ReconType).MapReconMethod;
+                }
+
+                method = recon.GetType().GetMethod(ReconMappedMethodName);
+                results = method.Invoke(recon, parametersArray);
+                VwTransactionDetailsModels = (List<VwTransactionDetailsModel>)results;
+                var allTransactions = VwTransactionDetailsModels.Where(x => x != null);
+
+                if (_Filter.ReconType > 0)
+                {
+                    if (fieldSelector.Count() == 2) //two way recon
+                    {
+                        var result = allTransactions.Select(x => new TwoWayModel()
+                        {
+                            TransactionDate = Convert.ToDateTime(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[0].Trim(), "TransactionDate"))).ToString("dd MMMM, yyyy"),
+                            TerminalId = x.TerminalId,
+                            CardNo = x.CardNumber,
+                            AccountNo = "'" + x.AccountNo,
+                            TraceNo = "'" + x.TraceNo,
+                            AuthCode = "'" + x.AuthCode,
+                            TerminalType = Helper.Helper.GetEnumValue<TerminalType>(x.TerminalType ?? 0).ToString(),
+                            Currency = x.Currency != null ? x.Currency.ToString() : "0",
+                            TransactionAmountSource = Convert.ToString(x.NepsAmount),
+                            ResponseCodeSource = "'" + x.NepsResponseCode + "/" + x.NepsResponseCodeDescription,
+                            StatusSource = x.Status,
+                            TransactionAmountDestination = Convert.ToString(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[1].Trim(), "Amount"))),
+                            ResponseCodeDestination = Convert.ToString(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[1].Trim(), "ResponseCode"))),
+                            FT_Branch = x.CBSRefValue == null
+                                ? string.Empty
+                                : "'" + x.CBSRefValue.ToString()
+                        }).ToList();
+
+                        var dispalyResult = result.Skip(param.iDisplayStart).Take(param.iDisplayLength).ToList();
+
+                        return Json(new
+                        {
+                            sEcho = param.sEcho,
+                            iTotalRecords = result.Count,
+                            iTotalDisplayRecords = result.Count,
+                            aaData = dispalyResult
+                        },
+                            JsonRequestBehavior.AllowGet);
+                    }
+                    else if (fieldSelector.Count() == 3) // three way recon..
+                    {
+                        var result = allTransactions.Select(x => new ThreeWayModel()
+                        {
+                            TransactionDate = Convert.ToDateTime(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[0].Trim(), "TransactionDate"))).ToString("dd MMMM, yyyy"),
+                            TerminalId = x.TerminalId,
+                            CardNo = x.CardNumber,
+                            TraceNo = "'" + x.TraceNo,
+                            StatusSource = x.Status,
+                            TransactionAmountSource = Convert.ToString(x.NepsAmount),
+                            ResponseCodeSource = "'" + x.NepsResponseCode + "/" + x.NepsResponseCodeDescription,
+                            TransactionAmountDestination1 = Convert.ToString(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[1].Trim(), "Amount"))),
+                            ResponseCodeDestination1 = Convert.ToString(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[1].Trim(), "ResponseCode"))),
+                            TransactionAmountDestination2 = Convert.ToString(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[2].Trim(), "Amount"))),
+                            ResponseCodeDestination2 = Convert.ToString(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[2].Trim(), "ResponseCode")))
+
+                        }).ToList();
+                        var dispalyResult = result.Skip(param.iDisplayStart).Take(param.iDisplayLength).ToList();
+
+                        return Json(new
+                        {
+                            sEcho = param.sEcho,
+                            iTotalRecords = result.Count,
+                            iTotalDisplayRecords = result.Count,
+                            aaData = dispalyResult
+                        },
+                            JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            catch (ArgumentException e)
+            {
+                ModelState.AddModelError("", "");
+            }
+            return null;
+        }
+        #endregion
+
+        #region Excel Export
+        public ActionResult ExportToExcel(Db.Filter filterModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.DrpReconTypesData = ReconBAL.GetReconList();
+                return View("Index", InitialVal(filterModel));
+            }
+            recon = new Recon();
+            object[] parametersArray = new object[] { filterModel };
+            object results = new object();
+            string ReconMappedMethodName = string.Empty;
+            List<TwoWayModel> resultTwoway = new List<TwoWayModel>();
+            List<ThreeWayModel> resultThreeway = new List<ThreeWayModel>();
+
+            Mapper.CreateMap(typeof(Db.Filter), typeof(Db.Filter));
+            var summaryFilterModel = Mapper.Map<Db.Filter>(filterModel);
+            string[] reconName = { "Header1", "Header2" };
+
+            if (!String.IsNullOrEmpty(filterModel.ReconTypeName))
+            {
+                reconName = Regex.Split(filterModel.ReconTypeName, "Vs");
+            }
+            ViewBag.DrpReconTypesData = ReconBAL.GetReconList();
+            try
+            {
+                if (filterModel.ReconType > 0)
+                {
+                    ReconMappedMethodName = ReconBAL.GetReconTypeMethodName(filterModel.ReconType);
+
+                    if (reconName.Count() == 2)
+                        resultTwoway = ExportExcelTwoWayDataSource(ReconMappedMethodName, parametersArray, resultTwoway, reconName);
+                    else if (reconName.Count() == 3)
+                    {
+                        resultThreeway = ExportExcelThreeWayDataSource(ReconMappedMethodName, parametersArray, resultThreeway, reconName);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return View("Index", Report.GetReportFromFilter(summaryFilterModel));
+            }
+
+            if (reconName.Count() == 2)
+            {
+                var TotalCountSource = resultTwoway.Where(x => string.IsNullOrEmpty(x.TransactionAmountSource)).Select(x => x.TransactionAmountSource).ToList().Count
+                    .ToString();
+                var TotalCountDestination = resultTwoway.Where(x => string.IsNullOrEmpty(x.TransactionAmountDestination)).Select(x => x.TransactionAmountDestination).ToList().Count
+                    .ToString();
+                var TotalAmountSource = resultTwoway
+                    .Select(x => string.IsNullOrEmpty(x.TransactionAmountSource) ? 0.00 : Convert.ToDouble(x.TransactionAmountSource)).DefaultIfEmpty(0).Sum().ToString();
+
+                var TotalAmountDestination = resultTwoway
+                    .Select(x => string.IsNullOrEmpty(x.TransactionAmountDestination) ? 0.00 : Convert.ToDouble(x.TransactionAmountDestination)).DefaultIfEmpty(0).Sum().ToString();
+
+
+                var heading = new[] { "Date", "Terminal", "Card No.", "Account No.", "Trace", "Auth Code", "Terminal Type", "Currency", "Amount", "Response Code", "Status", "Amount", "Response Code", "FT\\Branch" };
+                var footer = new[] { "", "", "", "", "", "", "", "Total", TotalAmountSource, TotalCountSource, "Total", TotalAmountDestination, TotalCountDestination, "" };
+
+                this.ExportToExcelCore(filterModel, resultTwoway, "ReconcileReport", new List<string[]> { heading }, new List<string[]> { footer });
+            }
+            else if (reconName.Count() == 3)
+            {
+                var TotalCountSource = resultThreeway.Where(x => !string.IsNullOrEmpty(x.TransactionAmountSource)).Select(x => x.TransactionAmountSource).ToList().Count
+                    .ToString();
+                var TotalCountDestination1 = resultThreeway.Where(x => !string.IsNullOrEmpty(x.TransactionAmountDestination1)).Select(x => x.TransactionAmountDestination1).ToList().Count
+                    .ToString();
+                var TotalCountDestination2 = resultThreeway.Where(x => !string.IsNullOrEmpty(x.TransactionAmountDestination2)).Select(x => x.TransactionAmountDestination2).ToList().Count
+                    .ToString();
+                var TotalAmountSource = resultThreeway
+                    .Select(x => string.IsNullOrEmpty(x.TransactionAmountSource) ? 0.00 : Convert.ToDouble(x.TransactionAmountSource)).DefaultIfEmpty(0).Sum().ToString();
+
+                var TotalAmountDestination1 = resultThreeway
+                    .Select(x => string.IsNullOrEmpty(x.TransactionAmountDestination1) ? 0.00 : Convert.ToDouble(x.TransactionAmountDestination1)).DefaultIfEmpty(0).Sum().ToString();
+                var TotalAmountDestination2 = resultThreeway
+                    .Select(x => string.IsNullOrEmpty(x.TransactionAmountDestination2) ? 0.00 : Convert.ToDouble(x.TransactionAmountDestination2)).DefaultIfEmpty(0).Sum().ToString();
+
+
+                var heading = new[] { "Date", "Terminal", "Card No.", "Trace", "Status", "Amount", "Response Code", "Amount", "Response Code", "Amount", "Response Code" };
+                var footer = new[] { "", "", "", "", "Total", TotalAmountSource, TotalCountSource, TotalAmountDestination1, TotalCountDestination1, TotalAmountDestination2, TotalCountDestination2 };
+
+                this.ExportToExcelCore(filterModel, resultThreeway, "ReconcileReport", new List<string[]> { heading }, new List<string[]> { footer });
+
+            }
+            try
+            {
+                SaveActivityLogData("Report", "ExportToExcel", filterModel.ReconTypeName);
+            }
+            catch { }
+
+            return View("Index", Report.GetReportFromFilter(summaryFilterModel));
+        }
+        private List<TwoWayModel> ExportExcelTwoWayDataSource(string ReconMappedMethodName, object[] parametersArray, List<TwoWayModel> result, string[] fieldSelector)
+        {
+            object results = new object();
+            MethodInfo method = recon.GetType().GetMethod(ReconMappedMethodName);
+            results = method.Invoke(recon, parametersArray);
+
+            List<VwTransactionDetailsModel> VwTransactionDetailsModels = (List<VwTransactionDetailsModel>)results;
+            result = VwTransactionDetailsModels.Select(x => new TwoWayModel()
+            {
+                TransactionDate = Convert.ToDateTime(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[0].Trim(), "TransactionDate"))).ToString("dd MMMM, yyyy"),
+                TerminalId = x.TerminalId,
+                CardNo = x.CardNumber,
+                AccountNo = "'" + x.AccountNo,
+                TraceNo = "'" + x.TraceNo,
+                AuthCode = "'" + x.AuthCode,
+                TerminalType = Helper.Helper.GetEnumValue<TerminalType>(x.TerminalType ?? 0).ToString(),
+                Currency = x.Currency != null ? x.Currency.ToString() : "0",
+                TransactionAmountSource = Convert.ToString(x.NepsAmount),
+                ResponseCodeSource = "'" + x.NepsResponseCode + "/" + x.NepsResponseCodeDescription,
+                StatusSource = x.Status,
+                TransactionAmountDestination = Convert.ToString(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[1].Trim(), "Amount"))),
+                ResponseCodeDestination = Convert.ToString(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[1].Trim(), "ResponseCode"))),
+                FT_Branch = x.CBSRefValue == null
+                    ? string.Empty
+                    : "'" + x.CBSRefValue.ToString()
+            }).ToList();
+
+            return result;
+        }
+        private List<ThreeWayModel> ExportExcelThreeWayDataSource(string ReconMappedMethodName, object[] parametersArray, List<ThreeWayModel> result, string[] fieldSelector)
+        {
+            object results = new object();
+            MethodInfo method = recon.GetType().GetMethod(ReconMappedMethodName);
+            results = method.Invoke(recon, parametersArray);
+
+            List<VwTransactionDetailsModel> VwTransactionDetailsModels = (List<VwTransactionDetailsModel>)results;
+
+            result = VwTransactionDetailsModels.Select(x => new ThreeWayModel()
+            {
+                TransactionDate = Convert.ToDateTime(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[0].Trim(), "TransactionDate"))).ToString("dd MMMM, yyyy"),
+                TerminalId = x.TerminalId,
+                CardNo = x.CardNumber,
+                TraceNo = "'" + x.TraceNo,
+                StatusSource = x.Status,
+                TransactionAmountSource = Convert.ToString(x.NepsAmount),
+                ResponseCodeSource = "'" + x.NepsResponseCode + "/" + x.NepsResponseCodeDescription,
+                TransactionAmountDestination1 = Convert.ToString(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[1].Trim(), "Amount"))),
+                ResponseCodeDestination1 = Convert.ToString(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[1].Trim(), "ResponseCode"))),
+                TransactionAmountDestination2 = Convert.ToString(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[2].Trim(), "Amount"))),
+                ResponseCodeDestination2 = Convert.ToString(Helper.Helper.GetPropertyValue(x, string.Concat(fieldSelector[2].Trim(), "ResponseCode")))
+            }).ToList();
+            return result;
+        }
+        public void ExportToExcelCore<T>(Db.Filter filterModel, IList<T> data, string worksheetTitle, List<string[]> titles, List<string[]> footer)
+        {
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                string excelName = filterModel.ReconTypeName + "_" + filterModel.IsOwnUsPayableReceivable + "_" +
+                                   filterModel.Status + "_" +
+                                   (filterModel.FromDate.Equals(filterModel.ToDate) ? filterModel.FromDate : filterModel.FromDate + " To " + filterModel.ToDate);
+
+                var dataCount = data.Count() + 4;
+
+                var ws = wb.Worksheets.Add(worksheetTitle); //add worksheet to workbook
+
+                var reconName = Regex.Split(filterModel.ReconTypeName, "Vs");
+
+
+                //format..
+                if (reconName.Length == 2)
+                    TwoWayWorkSheet<T>(ws, data.Count, excelName, reconName);
+                else if (reconName.Length == 3)
+                    ThreeWayWorkSheet<T>(ws, data.Count, excelName, reconName);
+
+                ws.Cell(3, 1).InsertData(titles); //insert titles to first row
+
+
+                for (int i = 1; i < 15; i++)
+                {
+                    ws.Cell(3, i).Style.Fill.BackgroundColor = XLColor.Red;  //header color..
+                    ws.Cell(dataCount, i).Style.Fill.BackgroundColor = XLColor.Red;  //footer color..
+                }
+
+                if (data != null && data.Count() > 0)
+                {
+                    //insert data to from forth row on
+                    ws.Cell(4, 1).InsertData(data);
+                }
+                ws.Cell(dataCount, 1).InsertData(footer); // footer rows..
+                MemoryStream stream = GetStream(wb);// The method is defined below
+                Response.Clear();
+                Response.Buffer = true;
+                Response.AddHeader("Content-Disposition", "attachment; filename=" + excelName + ".xlsx");
+                Response.ContentType = "application/vnd.ms-excel";
+                Response.BinaryWrite(stream.ToArray());
+                Response.End();
+            }
+        }
+
+        private static void TwoWayWorkSheet<T>(IXLWorksheet ws, int totalData, string excelName, string[] reconName)
+        {
+            ws.Cell("A1").Value = excelName;
+            ws.Range("A1:N1").Row(1).Merge();
+            ws.Cell("A1").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell("A2").Value = "";
+            ws.Range("A2:H2").Row(1).Merge();
+            ws.Cell("I2").Value = reconName[0];
+            ws.Range("I2:J2").Row(1).Merge();
+            ws.Cell("L2").Value = reconName[1];
+            ws.Range("L2:M2").Row(1).Merge();
+
+            ws.Cell("I2").DataType = XLDataType.Number;
+            ws.Cell("L2").DataType = XLDataType.Number;
+        }
+        private static void ThreeWayWorkSheet<T>(IXLWorksheet ws, int totalData, string excelName, string[] reconName)
+        {
+            ws.Cell("A1").Value = excelName;
+            ws.Range("A1:N1").Row(1).Merge();
+            ws.Cell("A1").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell("A2").Value = "";
+            ws.Range("A2:E2").Row(1).Merge();
+            ws.Cell("F2").Value = reconName[0];
+            ws.Range("F2:G2").Row(1).Merge();
+            ws.Cell("H2").Value = reconName[1];
+            ws.Range("H2:I2").Row(1).Merge();
+            ws.Cell("J2").Value = reconName[2];
+            ws.Range("J2:K2").Row(1).Merge();
+//            ws.Range(ws.Cell("F4"), ws.Cell("F" + totalData)).Style.NumberFormat.Format = "@";
+//            ws.Range(ws.Cell("F4"), ws.Cell("F" + totalData)).SetDataType(XLDataType.Number);
+
+        }
+
+        public MemoryStream GetStream(XLWorkbook excelWorkbook)
+        {
+            MemoryStream fs = new MemoryStream();
+            excelWorkbook.SaveAs(fs);
+            fs.Position = 0;
+            return fs;
+        }
+
+        #endregion
+    }
+}

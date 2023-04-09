@@ -1,0 +1,64 @@
+﻿USAGES:
+string sqlQuery = "SELECT Role from RoleDetails Where RoleId=" + roleId.ToString();
+            object role = (new DbOperation()).ExecuteScalar(sqlQuery);
+            if (role != null)
+            {
+                switch (role.ToString().ToUpper())
+                {
+                    case "ADMIN":
+                        userRole = UserRole.Admin;
+                        break;
+                    case "USER":
+                        userRole= UserRole.GeneralUser;
+                        break;
+                    default :
+                        userRole = UserRole.GeneralUser;
+                        break;
+                }
+            }
+
+// with parameters
+DBParameterCollection paramCollection = new DBParameterCollection();
+            paramCollection.Add(new DBParameter("@itemID", itemID));
+            paramCollection.Add(new DBParameter("@expenseDesc", expenseDesc));
+            paramCollection.Add(new DBParameter("@expenseAmount", expenseAmount));
+            paramCollection.Add(new DBParameter("@expenseBy", expenseBy));
+            paramCollection.Add(new DBParameter("@expenseDate", expenseDate, DbType.DateTime));
+            paramCollection.Add(new DBParameter("@monthYear", monthYear));
+
+            string Query = "INSERT INTO Expense_Details (Item_Id,  Exp_Desc , " +
+                " Exp_Amount,  Exp_By ,  Exp_Date , MonthYear ,  " +
+                "Finalized, IsDeleted ) "  + 
+                "VALUES (@itemID, @expenseDesc, @expenseAmount, " +
+                "@expenseBy, @expenseDate, @monthYear, 0, 0)";
+            
+            return _dbHelper.ExecuteNonQuery(Query, paramCollection) > 0;                
+       
+
+	        DBParameterCollection paramCollection = new DBParameterCollection();
+            paramCollection.Add(new DBParameter("@expenseDesc", expenseDesc));
+            paramCollection.Add(new DBParameter("@expenseAmount", expenseAmount));
+            paramCollection.Add(new DBParameter("@expDate", expenseDate, DbType.DateTime ));
+            paramCollection.Add(new DBParameter("@itemId", itemId));
+            paramCollection.Add(new DBParameter("@monthYear", monthYear));
+            paramCollection.Add(new DBParameter("@expenseID", expenseID));
+            
+            string Query = "UPDATE Expense_Details SET Exp_Desc = @expenseDesc , " +
+            "Exp_Amount = @expenseAmount, " +
+            "Exp_Date =@expDate, Item_Id =@itemId, MonthYear=@monthYear WHERE Exp_Id=@expenseID";
+
+            return _dbHelper.ExecuteNonQuery(Query, paramCollection) > 0;             
+
+
+			//gettting datatable
+			
+            DataTable dt = new DataTable();
+            string Query = "SELECT Expense_Details.Exp_Id,Item_Details.Item_Name,Expense_Details.Exp_Desc,Expense_Details.Exp_Amount, " +                            
+                            "Expense_Details.Exp_Date from Expense_Details,Item_Details " +                            
+                            "where Expense_Details.Item_Id=Item_Details.Item_Id  AND  Expense_Details.Exp_Id=" + expenseID.ToString();
+
+            dt = _dbHelper.ExecuteDataTable(Query);
+            return dt;
+
+
+			<add name="sqlServerCon" connectionString="Data Source=PRODSK0198;Initial Catalog=AccountPlus;User ID=sa;Password=Swayam1;" providerName="SQLSERVER" />

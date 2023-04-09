@@ -1,0 +1,98 @@
+﻿@model Db.Model.Terminal
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Template.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Terminal</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Branch.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Branch.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TerminalId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TerminalId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TerminalType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TerminalType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TerminalBrand)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TerminalBrand)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TerminalIP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TerminalIP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TerminalUserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TerminalUserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TerminalPassword)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TerminalPassword)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cbs_terminal_ac)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cbs_terminal_ac)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

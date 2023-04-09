@@ -1,0 +1,92 @@
+﻿@model IEnumerable<ReconUi.Models.DigitalBanking.NostroTransactionViewModel>
+
+@{
+    Layout = null;
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <button style="display: inline-block; float: right; margin-bottom: 23px;" id="btnExport">
+                    <img src="/Content/images/ExportButton.gif" style="float: right; margin-right: 0.5em; height: 20px;">Export Excel
+                </button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-link" id="btnViewFileupload">Close</button>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <p><b>@ViewBag.HistoryFileName</b></p>
+    </div>
+    <div class="col-md-12">
+        <div class="panel panel-primary list-panel" id="list-panel">
+            <div class="panel-body">
+                <table id="view-data-table" class="table table-striped table-bordered" style="width: 100%">
+                    <thead>
+                        @*<tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><input type="text" id="search-TerminalId" placeholder="Search Terminal Id"></td>
+                            <td><input type="text" id="search-TransactionDate" placeholder="Search Transaction Date"></td>
+                            <td></td>
+                        </tr>*@
+                        <tr>
+                            <th>Transaction Id</th>
+                            <th>Transaction Date</th>
+                            <th>Value Date</th>
+                            <th>Transaction Amount</th>
+                            <th>Balance Amount</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var Transaction in Model)
+                        {
+                        <tr>
+                            <td>@Transaction.TransactionId</td>
+                            <td>@Transaction.TransactionDate</td>
+                            <td>@Transaction.ValueDate</td>
+                            <td>@Transaction.TransactionAmount</td>
+                            <td>@Transaction.BalanceAmount</td>
+                            <td>@Transaction.Description</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var table = $('#view-data-table').DataTable({
+            "lengthChange": true,
+            "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+        });
+
+        $(document).on('keyup', '#search-TerminalId', function () {
+            debugger;
+            table
+                .column(4)
+                .search(this.value)
+                .draw();
+        });
+        $(document).on('keyup', '#search-TransactionDate', function () {
+            debugger;
+            table
+                .column(5)
+                .search(this.value)
+                .draw();
+        });
+        $("#btnViewFileupload").click(function () {
+            $("#ViewTransactionsPartial").html("");
+        });
+    });
+</script>

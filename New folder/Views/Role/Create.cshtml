@@ -1,0 +1,33 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+@{
+    ViewBag.Title = "User";
+    ViewBag.MenuTitle = "User";
+}
+<div class="card">
+    <div class="content">
+        <div class="row">
+            <div style="padding: 33px;">
+                <div class="col-xs-12">
+                    <h2>Add New Role </h2>
+                </div>
+                @using (Html.BeginForm())
+                {
+                    <div class="col-xs-12">
+                        <div>
+                            <p> Enter User Role Name:</p>
+                            @Html.EditorFor(m => m.Name, new {@class = "form-control"})
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-xs-12" style="margin:11px 0px 0px 9px;">
+                        <input type="submit" value="Create Role" class="btn btn-success" />
+                    </div>
+                }
+
+                <div class="col-xs-12" style="margin:11px 0px 0px 0px;">
+                    @Html.ActionLink("Back to list", "Index", "Role")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

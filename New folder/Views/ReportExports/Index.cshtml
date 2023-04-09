@@ -1,0 +1,35 @@
+﻿@model Db.Model.ExcelReport
+@{
+    ViewBag.Title = "Report Exports";
+    ViewBag.MenuTitle = "ReportExports";
+}
+
+<h2>Report Builder</h2>
+@using (Html.BeginForm("export", "reports", FormMethod.Get))
+{
+    @Html.AntiForgeryToken()
+    <div class="row container" excbtn></div>
+    <div class="row">
+        <div class="col-md-3"> From : <input type="date" name="name" value="" class="form-control date-picker hasDatepicker" id="min" placeholder="Input Date" /></div>
+        <div class="col-md-3">To : <input type="date" name="name" value="" class="form-control date-picker hasDatepicker" id="max" placeholder="Input Date" /></div>
+
+        <div class="col-md-2">Report Type: @Html.DropDownList("ReportName", null, htmlAttributes: new { @class = "form-control rptType" })</div>
+
+        <div class="col-md-2">Terminal: @Html.DropDownList("TerminalId", null, "", htmlAttributes: new { @class = "form-control terminalId" })</div>
+        <br />
+        <div class="col-md-2"><a id="btnShow" class="btn btn-block btn-success" href="#">Show</a></div>
+    </div>
+    <div id="recon-table" class="table table-responsive"></div>
+    <div class="footer">
+        <p>&nbsp;</p>
+    </div>
+}
+<script src="~/Scripts/proj/JSON-to-Table.min.1.0.0.js"></script>
+<script src="~/Scripts/proj/Report.js"></script>
+
+@*<script src="~/Content/js/datatablebuttons.js"></script>*@
+<script src="~/Content/js/jszip.min.js"></script>
+
+
+
+

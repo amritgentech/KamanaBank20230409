@@ -1,0 +1,33 @@
+﻿@using Db
+@model Db.Filter
+<div class="card">
+    <div class="header">
+        <h6> Filters </h6>
+    </div>
+    <div class="content">
+        <div class="row">
+            <div id="datepicker"></div>
+           
+            <div class="col-xs-3">
+                @Html.TextBoxFor(x => x.FromDate, new { @type = "date", @class = "form-control date-picker", @placeholder = "Start Date" })
+                @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-xs-3">
+                <div>
+                    @Html.TextBoxFor(x => x.ToDate, new {@type="date", @class = "form-control date-picker", @placeholder = "End Date" })
+                    @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
+                </div>
+              
+            </div>
+            <div class="col-xs-3">
+                <div class="dropdown" data-toggle="dropdown" id="navbarDropdownMenuLink1">
+                    @Html.DropDownListFor(model => model.TerminalId, ViewBag.DrpTerminalListData as List<SelectListItem>, "Please Select Terminal", new { @id = "terminalId", @class = "form-control btn btn-default drpBackColor selectBox" })
+                    @Html.ValidationMessageFor(model => model.TerminalId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <button type="submit" id="buttonFilter" class="btn btn-block btn-success">Filter</button>
+            </div>
+        </div>
+    </div>
+</div>

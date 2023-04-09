@@ -1,0 +1,34 @@
+﻿@using Db
+@model Db.MobileBankingDashboard
+@{
+    ViewBag.Title = "Mobile Banking";
+    ViewBag.MenuTitle = "Mobile Banking";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            @using (Html.BeginForm("Filter", "MobileBanking", FormMethod.Post, new { id = "headerSearch", enctype = "multipart/form-data" }))
+            {
+            <div class="col-md-12">
+                @Html.Partial("~/Views/MobileBanking/_Filter.cshtml", Model.Filter)
+            </div>
+            }
+        </div>
+        <div class="row ">
+            <div class="col-sm-12">
+                <h6>Transaction Detail</h6>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("~/Views/MobileBanking/_Summary.cshtml", Model.Summary)
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script src="~/Scripts/proj/MobileBankingDashboardSummary.js"></script>

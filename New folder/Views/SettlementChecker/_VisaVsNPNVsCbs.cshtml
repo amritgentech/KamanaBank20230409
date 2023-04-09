@@ -1,0 +1,111 @@
+﻿@model List<Db.SettlementModel>
+<style>
+    .pagination {
+        display: inline-block;
+    }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+            .pagination a.active {
+                background-color: dodgerblue;
+                color: white;
+            }
+
+            .pagination a:hover:not(.active) {
+                background-color: #ddd;
+            }
+    #recon-table tr:hover {
+        background-color: #EEA47FFF;
+    }
+
+    #recon-table th {
+        background-color: white;
+        color: black;
+    }
+
+    #recon-table td {
+        color: white;
+    }
+
+    #recon-table tbody {
+        background-color: #6E6E6DFF;
+    }
+</style>
+
+<div class="content">
+<div class="row " style="overflow-x:auto;">
+    <table id="recon-table" class="table table-hover">
+        <thead>
+            <tr>
+                <th colspan="8"></th>
+                <th colspan="2">VISA</th>
+                <th colspan="2">NPN</th>
+                <th colspan="2">CBS</th>
+            </tr>
+            <tr>
+                <th>Is Settled</th>
+                <th>Remarks</th>
+                <th>Date</th>
+                <th>Terminal</th>
+                <th>Card No</th>
+                <th>Trace No</th>
+                <th>Status</th>
+                <th>ONUS/OFFUS</th>
+                <th class="rightTextAlign">Amount</th>
+                <th class="centerTextAlign">Response Code</th>
+                <th class="rightTextAlign">Amount</th>
+                <th class="centerTextAlign">Response Code</th>
+                <th class="rightTextAlign">Amount</th>
+                <th class="centerTextAlign">Response Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+            <tr>
+                <td>
+                    @Html.CheckBoxFor(m => m[i].IsChecked, new { @class = "checkid" })
+                </td>
+                <td>@Html.DisplayFor(m => m[i].Reason)</td>
+                <td>
+                    @Html.HiddenFor(m => m[i].SettlementId)
+                    @Model[i].TransactionDate.ToString("MM/dd/yyyy")
+                </td>
+                <td>@Html.DisplayFor(m => m[i].TerminalId)</td>
+                <td>@Html.DisplayFor(m => m[i].CardNo)</td>
+                <td>@Html.DisplayFor(m => m[i].TraceNo)</td>
+                <td>@Html.DisplayFor(m => m[i].Status)</td>
+                <td>@Html.DisplayFor(m => m[i].IsOwnUsPayableReceivable)</td>
+                <td>@Html.DisplayFor(m => m[i].VisaTransactionAmount)</td>
+                <td>@Html.DisplayFor(m => m[i].VisaResponseCode)</td>
+                <td>@Html.DisplayFor(m => m[i].NpnTransactionAmount)</td>
+                <td>@Html.DisplayFor(m => m[i].NpnResponseCode)</td>
+                <td>@Html.DisplayFor(m => m[i].CbsTransactionAmount)</td>
+                <td>@Html.DisplayFor(m => m[i].CbsResponseCode)</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+</div>
+
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.table.hpaging.min.js"></script>
+<script>
+    $(function () {
+      
+        $("#recon-table").hpaging({
+            "limit": 10
+        });
+       
+    });
+</script>
+
+
+
+

@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7604BE76-F8EE-49DB-A324-A385A2B75912}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ReconParser</RootNamespace>
+    <AssemblyName>ReconParser</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>E:\reconparser\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\ReconUi\ReconParserExecutable\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\ReconUi\ReconParserExecutable\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>A8F15CDB463AD49216CDF98C82148A85C317A185</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>ReconParser_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.5.2.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.2.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.pdfa">
+      <HintPath>..\lib\itextsharp.pdfa.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Code\FolderWatcherService.cs" />
+    <Compile Include="App_Code\Recon\DigitalBanking\Cbs\EsewaParking\EsewaParking.cs" />
+    <Compile Include="App_Code\Recon\DigitalBanking\Cbs\FonepayIbftParking\FonepayIbftParking.cs" />
+    <Compile Include="App_Code\Recon\DigitalBanking\Cbs\TopupParking\TopupParking.cs" />
+    <Compile Include="App_Code\Recon\DigitalBanking\InternetTopup\InternetTopup.cs" />
+    <Compile Include="App_Code\Recon\DigitalBanking\Cbs\CbsPayable.cs" />
+    <Compile Include="App_Code\Recon\DigitalBanking\MobileIbft\MobileIbft.cs" />
+    <Compile Include="App_Code\Recon\DigitalBanking\MobileTopup\MobileTopup.cs" />
+    <Compile Include="App_Code\Recon\DigitalBanking\InternetIbft\InternetIbft.cs" />
+    <Compile Include="App_Code\Recon\DigitalBanking\Mirror\Mirror.cs" />
+    <Compile Include="App_Code\Recon\DigitalBanking\Nostro\Nostro.cs" />
+    <Compile Include="App_Code\Recon\EBase.cs" />
+    <Compile Include="App_Code\Recon\Base.cs" />
+    <Compile Include="App_Code\Recon\CBS\Cbs.cs" />
+    <Compile Include="App_Code\Recon\CBS\Finacle\Finacle.cs" />
+    <Compile Include="App_Code\Recon\CBS\Flexcube\Flexcube.cs" />
+    <Compile Include="App_Code\Recon\CBS\Pumori\Pumori.cs" />
+    <Compile Include="App_Code\Recon\CBS\T24\T24.cs" />
+    <Compile Include="App_Code\Recon\Ej\Diebold\Diebold.cs" />
+    <Compile Include="App_Code\Recon\Ej\Diebold\Kumari\KumariYcsDiebold.cs" />
+    <Compile Include="App_Code\Recon\Ej\Diebold\Neps\NepsDiebold.cs" />
+    <Compile Include="App_Code\Recon\Ej\Diebold\NPN\NPNDiebold.cs" />
+    <Compile Include="App_Code\Recon\Ej\Diebold\SCT\SCTDiebold.cs" />
+    <Compile Include="App_Code\Recon\Ej\Ejournal.cs" />
+    <Compile Include="App_Code\Recon\Ej\Ncr\Kumari\KumariYcsNcr.cs" />
+    <Compile Include="App_Code\Recon\Ej\Ncr\Ncr.cs" />
+    <Compile Include="App_Code\Recon\Ej\Ncr\Neps\NepsNcr.cs" />
+    <Compile Include="App_Code\Recon\Ej\Ncr\NPN\NPNNcr.cs" />
+    <Compile Include="App_Code\Recon\Ej\Ncr\SCT\SCTNcr.cs" />
+    <Compile Include="App_Code\Recon\Ej\Vortex\Vortex.cs" />
+    <Compile Include="App_Code\Recon\Ej\Vortex\NPN\NPNVortex.cs" />
+    <Compile Include="App_Code\Recon\Ej\Wincor\Kumari\KumariYcsWincor.cs" />
+    <Compile Include="App_Code\Recon\Ej\Wincor\Neps\NEPSWincor.cs" />
+    <Compile Include="App_Code\Recon\Ej\Wincor\NPN\NPNWincor.cs" />
+    <Compile Include="App_Code\Recon\Ej\Wincor\SCT\SCTWincor.cs" />
+    <Compile Include="App_Code\Recon\Ej\Wincor\Wincor.cs" />
+    <Compile Include="App_Code\Recon\DigitalBanking\Esewa\Esewa.cs" />
+    <Compile Include="App_Code\Recon\DigitalBanking\DigitalBanking.cs" />
+    <Compile Include="App_Code\Recon\HBL\HBL.cs" />
+    <Compile Include="App_Code\Recon\Neps\NEPS.cs" />
+    <Compile Include="App_Code\Recon\MasterCard\Npn\MasterCard.cs" />
+    <Compile Include="App_Code\Recon\Npn\NPN.cs" />
+    <Compile Include="App_Code\Recon\Sct\SCT.cs" />
+    <Compile Include="App_Code\Recon\Switch\Switch.cs" />
+    <Compile Include="App_Code\Recon\TransactionBlock.cs" />
+    <Compile Include="App_Code\Recon\Visa\EP705\EP705Visa.cs" />
+    <Compile Include="App_Code\Recon\Visa\EP707\EP707Visa.cs" />
+    <Compile Include="App_Code\Recon\Visa\EP725\EP725Visa.cs" />
+    <Compile Include="App_Code\Recon\Visa\EP727\EP727Visa.cs" />
+    <Compile Include="App_Code\Recon\Visa\EP745\NEPS\EP745VisaNeps.cs" />
+    <Compile Include="App_Code\Recon\Visa\EP745\NPN\EP745VisaNpn.cs" />
+    <Compile Include="App_Code\Recon\Visa\Visa.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\Recon\Recon\Visa\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BAL\BAL.csproj">
+      <Project>{3ac4540c-afff-4044-aa72-cda4319dd2aa}</Project>
+      <Name>BAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DbOperation\DbOperations.csproj">
+      <Project>{61728480-707a-420a-9946-e4ef858b56fa}</Project>
+      <Name>DbOperations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Db\Db.csproj">
+      <Project>{bbdb524e-14a4-4b9a-bb1a-e57944410936}</Project>
+      <Name>Db</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Helper\Helper.csproj">
+      <Project>{b5627386-35be-4d4b-b63e-57bfd767fc4b}</Project>
+      <Name>Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReadWriteFiles\ReadWriteFiles.csproj">
+      <Project>{8e0ee00d-3ace-4703-9a7c-86b8cd3e6f6c}</Project>
+      <Name>ReadWriteFiles</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

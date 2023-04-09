@@ -1,0 +1,2 @@
+There is no Payable in ej case..
+There is no Summary Report for Ej reconcillation..

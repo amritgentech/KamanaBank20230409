@@ -1,0 +1,28 @@
+﻿@using ReconUi.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+<link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/Proj/Style.css")" rel="stylesheet" type="text/css" />
+<div class="loginmodal-container">
+    <h1>Login to Your Account</h1><br>
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.TextBoxFor(m => m.UserName, new { @Value = "super", @id = "user", @class = "form-control", placerholder = "Username" })
+        @Html.ValidationMessageFor(m => m.UserName)
+        @Html.PasswordFor(m => m.Password, new { @Value = "Test@2", @id = "user", @class = "form-control", placerholder = "Password" })
+        @Html.ValidationMessageFor(m => m.Password)
+
+        <input type="submit" name="login" class="outline login loginmodal-submit" value="Login">
+        <div class="clearfix"></div>
+        @Html.ValidationSummary(true)
+    }
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

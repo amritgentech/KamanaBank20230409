@@ -1,0 +1,206 @@
+﻿@using Db
+@model Summary
+<link href="~/Content/Proj/Custom.css" rel="stylesheet" />
+<input type="hidden" name="ReconStatusTotalAmount" id="" />
+
+<div class="row">
+    <div class="col-lg-3 col-sm-6 totalTransaction">
+        <div class="card">
+            <div class="content">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <div class="icon-big icon-warning text-center">
+                            <i><img class="imageSize" src="../../Content/images/transaction.png" /></i>
+                        </div>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="numbers">
+                            <p>@Model.Transactions</p>
+                            <p><b>Transactions</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-6">
+        <div class="card">
+            <div class="content">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <div class="icon-big icon-warning text-center">
+                            <i><img class="imageSize" src="../../Content/images/amount.png" /></i>
+                        </div>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="numbers">
+                            <p>@Model.FormattedAmount</p>
+                            <p><b>Amount</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-sm-6 txnType" data-val="@Model.Matched" data-amount="@Model.Matched_Amount" id="Matched">
+        <a href="#">
+            <div class="card">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="icon-big icon-success text-center">
+                                <div class="ti-check"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="numbers">
+                                <p>@Model.Matched</p>
+                                <p>
+                                    <b>Matched</b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-3 col-sm-6 txnType" data-val="@Model.UnMatched" data-amount="@Model.UnMatched_Amount" id="Failed">
+        <a href="#">
+            <div class="card">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="icon-big icon-danger text-center">
+                                <i><img class="imageSize" src="../../Content/images/unmatched.png" /></i>
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="numbers">
+                                <p>@Model.UnMatched</p>
+                                <p>
+                                    <b>Failed</b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-3 col-sm-6 txnType" data-val="@Model.Invalid" data-amount="@Model.Invalid_Amount" id="Invalid">
+        <a href="#">
+            <div class="card">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="icon-big icon-danger text-center">
+                                <i><img class="imageSize" src="../../Content/images/invalid.png" /></i>
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="numbers">
+                                <p>@Model.Invalid</p>
+                                <p>
+                                    <b>Npn Invalid</b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    @*<div class="col-lg-3 col-sm-6 txnType" data-val="@Model.CbsInvalid" data-amount="@Model.CbsInvalid_Amount" id="CbsInvalid">
+        <a href="#">
+            <div class="card">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="icon-big icon-danger text-center">
+                                <i><img class="imageSize" src="../../Content/images/invalid.png" /></i>
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="numbers">
+                                <p>@Model.CbsInvalid</p>
+                                <p>
+                                    <b>Cbs Invalid</b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>*@
+    <div class="col-lg-3 col-sm-6 txnType" data-val="@Model.DateDiff" data-amount="@Model.DateDiff_Amount" id="DateDiff">
+        <a href="#">
+            <div class="card">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="icon-big icon-danger text-center">
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="numbers">
+                                <p>@Model.DateDiff</p>
+                                <p>
+                                    <b>Date Diff</b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-3 col-sm-6 txnType" data-val="@Model.Exception" data-amount="@Model.Exception_Amount" id="Exception">
+        <a href="#">
+            <div class="card">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="icon-big icon-danger text-center">
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="numbers">
+                                <p>@Model.Exception</p>
+                                <p>
+                                    <b>Exception</b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-3 col-sm-6 txnType" data-val="@Model.Suspected" data-amount="@Model.Suspected_Amount" id="Suspected">
+        <a href="#">
+            <div class="card">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="icon-big icon-danger text-center">
+                                @*                            <i><img class="imageSize" src="../../Content/images/invalid.png" /></i>*@
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="numbers">
+                                <p>@Model.Suspected</p>
+                                <p>
+                                    <b>Suspected</b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

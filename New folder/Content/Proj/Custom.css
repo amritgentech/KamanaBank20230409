@@ -1,0 +1,122 @@
+﻿.bindLabelControl {
+    display: inline;
+}
+
+.componentWidth {
+    width: 300px;
+}
+
+.drpBackColor {
+    background-color: #ffffff !important;
+    color: #9A9A9A !important;
+}
+
+.dashboardIconMargin {
+    margin-top: -31px;
+}
+
+.modalFontSize {
+    font-size: 18px;
+    text-align: right;
+}
+
+.selectBox {
+    border-radius: 42px;
+    border: 1px solid #66afe9;
+}
+
+.imageSize {
+    height: 34px;
+    width: 34px;
+}
+
+.imageSizeCollapseItem {
+    height: 22px;
+    width: 22px;
+}
+
+.sitemapImageSize {
+    height: 29px;
+    width: 29px;
+    margin-top: -9px;
+}
+
+#summary-table td.leftpadding {
+    text-align: right;
+    /*    padding-left: 18px !important*/
+}
+
+#summary-table td.center {
+    text-align: center;
+    /*    padding-left: 18px !important*/
+}
+
+.rightTextAlign {
+    text-align: right;
+}
+
+.centerTextAlign {
+    text-align: center;
+}
+/*ajaxwait*/
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modalWait {
+    /*    display:    none;*/
+    /*    position:   fixed;*/
+    /*    z-index:    1000;*/
+    /*    top:        0;*/
+    /*    left:       0;*/
+    /*    height:     100%;*/
+    /*    width:      100%;*/
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #666;
+    background-image: url('../../Content/images/loading.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 10000000;
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+/*for custom alert*/
+.successAlert {
+    padding: 20px;
+    background-color: #008000;
+    color: white;
+}
+.errorAlert {
+    padding: 20px;
+    background-color: #a52a2a;
+    color: white;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
+
+.dataTables_filter input {
+    background-color: #dcd4d4;
+}
+
+#btnViewFileupload {
+    float: right;
+    text-align: center;
+}

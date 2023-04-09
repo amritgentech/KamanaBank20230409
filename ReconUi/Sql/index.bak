@@ -1,0 +1,38 @@
+alter table Transactions alter column AuthCode nVarchar(20)
+CREATE INDEX TXN_INDEX_AuthCode ON Transactions(AuthCode);
+
+alter table Transactions alter column CardNo nVarchar(20)
+CREATE INDEX TXN_INDEX_CardNo ON Transactions(CardNo);
+
+alter table Transactions alter column TerminalId nVarchar(20)
+CREATE INDEX TXN_INDEX_TerminalId ON Transactions(TerminalId);
+
+alter table Transactions alter column TraceNo nVarchar(20)
+CREATE INDEX TXN_INDEX_TraceNo ON Transactions(TraceNo);
+
+alter table Transactions alter column ReferenceNo nVarchar(20)
+CREATE INDEX TXN_INDEX_ReferenceNo ON Transactions(ReferenceNo);
+
+alter table Transactions alter column TransactionDate datetime
+CREATE INDEX TXN_INDEX_TransactionDate ON Transactions(TransactionDate);
+
+
+CREATE INDEX TXN_INDEX_TransactionId ON Transactions(TransactionId);
+
+
+CREATE INDEX TXN_INDEX_Source_SourceId ON Transactions(Source_SourceId);
+CREATE INDEX TXN_INDEX_TerminalOwner ON Transactions(TerminalOwner);
+CREATE INDEX TXN_INDEX_TransactionStatus ON Transactions(TransactionStatus);
+
+
+
+drop INDEX TXN_INDEX_AuthCode ON Transactions;
+drop INDEX TXN_INDEX_CardNo ON Transactions
+drop INDEX TXN_INDEX_TerminalId ON Transactions
+drop INDEX TXN_INDEX_TraceNo ON Transactions
+drop INDEX TXN_INDEX_ReferenceNo ON Transactions
+drop INDEX TXN_INDEX_TransactionDate ON Transactions
+drop INDEX TXN_INDEX_TransactionId ON Transactions
+drop INDEX TXN_INDEX_Source_SourceId ON Transactions
+drop INDEX TXN_INDEX_TerminalOwner ON Transactions
+drop INDEX TXN_INDEX_TransactionStatus ON Transactions

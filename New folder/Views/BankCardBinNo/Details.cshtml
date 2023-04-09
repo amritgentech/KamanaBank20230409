@@ -1,0 +1,35 @@
+﻿@model Db.Model.BankCardBinNo
+
+@{
+    ViewBag.Title = "Details";
+    ViewBag.MenuTitle = "Bin No";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BankCardBinNo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BinNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BinNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NetworkType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NetworkType)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BankCardBinNoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

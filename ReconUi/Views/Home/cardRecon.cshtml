@@ -1,0 +1,68 @@
+﻿@using Db
+@model Dashboard
+
+@{
+    ViewBag.Title = "Dashboard";
+    ViewBag.MenuTitle = "Card Reconciliation";
+}
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            @using (Html.BeginForm("Filter", "Home", FormMethod.Post, new { id = "headerSearch", enctype = "multipart/form-data" }))
+            {
+                <div class="col-md-12">
+                    @Html.Partial("~/Views/Shared/_Filter.cshtml", Model.Filter)
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+            </div>
+@*            <div class="col-md-3">*@
+@*                <button style="display: inline-block;float: right; margin-bottom: 23px;" id="btnSummaryExport">*@
+@*                    <img src="/Content/images/ExportButton.gif" style="float: right; margin-right: 0.5em; height: 20px;">Export Summary Report*@
+@*                </button>*@
+@*            </div>*@
+        </div>
+        <div class="row OnUsScope">
+            <div class="col-sm-12">
+                <h6>On us</h6>
+                <hr />
+            </div>
+        </div>
+
+        <div class="row OnUsScope">
+            <div class="col-md-12" id="OnUs">
+                @Html.Partial("~/Views/Shared/_Summary.cshtml", Model.OnUsSummary)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h6>Recievable</h6>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="Receivable">
+                @Html.Partial("~/Views/Shared/_Summary.cshtml", @Model.RecievableSummary)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h6>Payable</h6>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="Payable">
+                @Html.Partial("~/Views/Shared/_Summary.cshtml", Model.PayableSummary)
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/proj/dashboardHomeSummary.js"></script>
+}

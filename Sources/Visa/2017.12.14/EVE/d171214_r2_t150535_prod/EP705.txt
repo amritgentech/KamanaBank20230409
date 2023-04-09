@@ -1,0 +1,129 @@
+REPORT EP-705   INCOMING INTERCHANGE                    VISANET EDIT PACKAGE                                             PAGE      1
+ SYSTEM DATE 17/12/14    RELEASE  4.00                       SALES DRAFTS                                              CPD   17/12/14
+ MACHHAPUCHCHHRE BANK LTD                                   CENTER 470554                                               RUN NO    002
+                                                                                                                                     
+      Sales Draft - Original          ----     Required Data                                                                         
+                                                                                                                                     
+ Acct Number & Extension   4020851160001131000                     Merchant ZIP Code         04215                                   
+ Floor Limit Indicator     Z                                       Merchant State/Prov. Code                                         
+ CRB/Exception File Ind                                            Requested Payment Service                                         
+ PCAS Indicator                                                    Number of Payment Forms                                           
+ Acquirer Reference Nbr    74940527347906002010338                 Usage Code                1                                       
+ Acquirer's Business ID    99999999                                Chargeback Reason Code    00                                      
+ Purchase Date             20171212                                Settlement Flag           0                                       
+ Destination Amount        000000043210                            Auth Characteristics Ind  N                                       
+ Destination Currency Code 840                                     Authorization Code        465412                                  
+ Source Amount             000000056549                            POS Terminal Capability   9                                       
+ Source Currency Code      036                                     Cardholder ID Method      4                                       
+ Merchant Name             DEPT. OF IMMIGRATION                    Collection-Only Flag                                              
+ Merchant City             SOUTHPORT                               POS Entry Mode            01                                      
+ Merchant Country Code     AU                                      Central Processing Date   20171214                                
+ Merchant Category Code    9399                                    Reimbursement Attribute   0                                       
+                                                                                                                                     
+      Sales Draft - Original          ----     Additional Data                                                                       
+                                                                                                                                     
+ Business Format Code                                              Interface Trace Number                                            
+ Token Assurance Level                                             Acceptance Terminal Ind                                           
+ Chargeback Reference Nbr  000000                                  Prepaid Card Indicator    P                                       
+ Documentation Indicator                                           Service Development Field 1                                       
+ Member Message Text                                               AVS Response Code                                                 
+ Special Condition Ind                                             Authorization Source Code                                         
+ Fee Program Indicator                                             Purchase Id Format                                                
+ Issuer Charge             S                                       Account Selection         0                                       
+ Card Acceptor ID          000009190316935                         Installment Payment Count                                         
+ Terminal ID                                                       Purchase Identifier                                               
+ Nat'l Reimbursement Fee   000000000000                            Cashback                  000000000                               
+ Mail/Phn/Ecomm & Pymt Ind 7                                       Chip Condition Code                                               
+ Special Chargeback Ind                                            POS Environment                                                   
+REPORT EP-705   INCOMING INTERCHANGE                    VISANET EDIT PACKAGE                                             PAGE      2
+ SYSTEM DATE 17/12/14    RELEASE  4.00                       SALES DRAFTS                                              CPD   17/12/14
+ MACHHAPUCHCHHRE BANK LTD                                   CENTER 470554                                               RUN NO    002
+                                                                                                                                     
+      Sales Draft - Original          ----     Payment Service Data                                                                  
+                                                                                                                                     
+ Transaction Identifier    587346330348469                         Merchant Volume Indicator                                         
+ Authorized Amount         000000056549                            ECommerce Goods Indicator                                         
+ Auth Currency Cd          036                                     Merchant Verification Val                                         
+ Authorization Response Cd                                         Interchange Fee Amount    000000000000000                         
+ Validation Code                                                   Interchange Fee Sign                                              
+ Excluded Trans ID Rsn                                             Src to Base Curr Ex Rate  00000000                                
+ CRS Processing Code                                               Base to Dest Curr Ex Rate 00000000                                
+ Chargeback Rights Ind                                             Optional Issuer ISA Amt   000000000000                            
+ Multiple Clearing Seq Nbr 01                                      Product Id                F                                       
+ Multiple Clearing Seq Cnt 01                                      Program ID                                                        
+ Market-Specific Auth Data                                         Dynamic Currency Conv Ind                                         
+ Total Authorized Amount   000000056549                            Acct Type Identification                                          
+ Information Indicator                                             Spend Qualified Indicator                                         
+ Merchant Telephone Number                                         PAN Token                 0000000000000000                        
+ Additional Data Indicator                                         CVV2 Result Code          M                                       
+                                                                                                                                     
+      Sales Draft - Original          ----     Required Data                                                                         
+                                                                                                                                     
+ Acct Number & Extension   4020851160001198000                     Merchant ZIP Code         00000                                   
+ Floor Limit Indicator     Z                                       Merchant State/Prov. Code                                         
+ CRB/Exception File Ind                                            Requested Payment Service                                         
+ PCAS Indicator            N                                       Number of Payment Forms                                           
+ Acquirer Reference Nbr    74599007347712130414625                 Usage Code                1                                       
+ Acquirer's Business ID    00000000                                Chargeback Reason Code    00                                      
+ Purchase Date             20171212                                Settlement Flag           0                                       
+ Destination Amount        000000002314                            Auth Characteristics Ind  N                                       
+ Destination Currency Code 840                                     Authorization Code        382315                                  
+ Source Amount             000002515000                            POS Terminal Capability   5                                       
+ Source Currency Code      410                                     Cardholder ID Method                                              
+ Merchant Name             SM DUTYFREE WHOLESALE 854               Collection-Only Flag                                              
+ Merchant City             SEOUL                                   POS Entry Mode            05                                      
+ Merchant Country Code     KR                                      Central Processing Date   20171214                                
+ Merchant Category Code    5309                                    Reimbursement Attribute   B                                       
+REPORT EP-705   INCOMING INTERCHANGE                    VISANET EDIT PACKAGE                                             PAGE      3
+ SYSTEM DATE 17/12/14    RELEASE  4.00                       SALES DRAFTS                                              CPD   17/12/14
+ MACHHAPUCHCHHRE BANK LTD                                   CENTER 470554                                               RUN NO    002
+                                                                                                                                     
+      Sales Draft - Original          ----     Additional Data                                                                       
+                                                                                                                                     
+ Business Format Code                                              Interface Trace Number                                            
+ Token Assurance Level                                             Acceptance Terminal Ind                                           
+ Chargeback Reference Nbr  000000                                  Prepaid Card Indicator                                            
+ Documentation Indicator                                           Service Development Field                                         
+ Member Message Text                                               AVS Response Code                                                 
+ Special Condition Ind                                             Authorization Source Code                                         
+ Fee Program Indicator                                             Purchase Id Format                                                
+ Issuer Charge             S                                       Account Selection         0                                       
+ Card Acceptor ID          00978549327                             Installment Payment Count                                         
+ Terminal ID               39994333                                Purchase Identifier                                               
+ Nat'l Reimbursement Fee   000000000000                            Cashback                  000000000                               
+ Mail/Phn/Ecomm & Pymt Ind                                         Chip Condition Code                                               
+ Special Chargeback Ind                                            POS Environment                                                   
+                                                                                                                                     
+      Sales Draft - Original          ----     Payment Service Data                                                                  
+                                                                                                                                     
+ Transaction Identifier    467345780217787                         Merchant Volume Indicator                                         
+ Authorized Amount         000000025150                            ECommerce Goods Indicator                                         
+ Auth Currency Cd          410                                     Merchant Verification Val                                         
+ Authorization Response Cd 00                                      Interchange Fee Amount    000000000000000                         
+ Validation Code                                                   Interchange Fee Sign                                              
+ Excluded Trans ID Rsn                                             Src to Base Curr Ex Rate  00000000                                
+ CRS Processing Code                                               Base to Dest Curr Ex Rate 00000000                                
+ Chargeback Rights Ind                                             Optional Issuer ISA Amt   000000000000                            
+ Multiple Clearing Seq Nbr 00                                      Product Id                F                                       
+ Multiple Clearing Seq Cnt 00                                      Program ID                                                        
+ Market-Specific Auth Data                                         Dynamic Currency Conv Ind                                         
+ Total Authorized Amount   000000000000                            Acct Type Identification                                          
+ Information Indicator                                             Spend Qualified Indicator                                         
+ Merchant Telephone Number                                         PAN Token                 0000000000000000                        
+ Additional Data Indicator                                         CVV2 Result Code                                                  
+                                                                                                                                     
+      Sales Draft - Original          ----     Chip Card Transaction Data                                                            
+                                                                                                                                     
+ Transaction Type          03                                      Iss Appl Data, Byte 3     0A                                      
+ Card Sequence Number      000                                     Term Verification Results                                         
+ Terminal Transaction Date 171212                                  Iss Appl Data, Byte 4-7   03A03000                                
+ Terminal Capability Prof. 606820                                  Cryptogram Amount         000000000000                            
+ Terminal Country Code     410                                     Iss Appl Data, Byte 8     00                                      
+ Terminal Serial Number                                            Iss Appl Data, Byte 9-16  2020202020202020                        
+ Unpredictable Number      55BC4720                                Iss Appl Data, Byte 1     06                                      
+ Appl Transaction Counter  0000                                    Iss Appl Data, Byte 17    20                                      
+ Appl Interchange Profile  1C00                                    Iss Appl Data, Byte 18-32 202020202020202020202020202020          
+ Cryptogram                EC74CF570DCD630F                        Form Factor Indicator                                             
+ Iss Appl Data, Byte 2     01                                      Issuer Script 1 Results   0000000000                              
+                                                                                                                                     
+ TRANSACTION TOTAL RECORD COUNT                2                                                                                     

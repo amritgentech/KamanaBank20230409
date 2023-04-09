@@ -1,0 +1,128 @@
+﻿@using Db
+@model Db.Filter
+@section scripts {
+    <link href="~/assets/css/now-ui-kit.css?v=1.1.0" rel="stylesheet" />
+    <script src="~/assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+    <script src="~/assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="~/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+    <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+    <script src="~/assets/js/plugins/bootstrap-switch.js"></script>
+    <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+    <script src="~/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+    <!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
+    <script src="~/assets/js/plugins/bootstrap-datepicker.js" type="text/javascript"></script>
+    <!-- Control Center for Now Ui Kit: parallax effects, scripts for the example pages etc -->
+    <script src="~/assets/js/now-ui-kit.js?v=1.1.0" type="text/javascript"></script>
+}
+<div class="card">
+    <div class="header">
+        <h6> Filters </h6>
+    </div>
+    @Html.HiddenFor(x => x.ReconTypeName, new { @id = "ReconTypeName" })
+    @Html.HiddenFor(x => x.Status, new { @id = "ReconTypeStatus" })
+    @Html.HiddenFor(x => x.IsOwnUsPayableReceivable, new { @id = "IsOwnUsPayableReceivable" })
+    <div class="content">
+        <div class="row">
+            <div id="datepicker"></div>
+            <div class="col-xs-3">
+                <div class="dropdown" data-toggle="dropdown" id="navbarDropdownMenuLink1">
+                    @Html.DropDownListFor(model => model.ReconType, ViewBag.DrpReconTypesData as List<SelectListItem>, "Please Select Recon Type", new { @id = "drpReconType", @class = "form-control btn btn-default drpBackColor selectBox" })
+                    @Html.ValidationMessageFor(model => model.ReconType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-xs-2">
+                @Html.TextBoxFor(x => x.FromDate, new { @Value = Model.InitialDateFrom, @class = "form-control date-picker", @placeholder = "Start Date" })
+                @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-xs-2">
+                @Html.TextBoxFor(x => x.ToDate, new { @Value = Model.InitialDateTo, @class = "form-control date-picker", @placeholder = "End Date" })
+                @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-xs-1">
+                <div class="radio">
+                    @Html.RadioButtonFor(m => m._Currency, Db.Filter.Currency.ALL, new { @checked = "checked" })
+                    <label for="radio4">
+                        @Db.Filter.Currency.ALL
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-1">
+                <div class="radio">
+                    @Html.RadioButtonFor(m => m._Currency, Db.Filter.Currency.NPR)
+                    <label for="radio2">
+                        @Db.Filter.Currency.NPR
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-1">
+                <div class="radio">
+                    @Html.RadioButtonFor(m => m._Currency, Db.Filter.Currency.INR)
+                    <label for="radio3">
+                        @Db.Filter.Currency.INR
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-1">
+                <div class="radio">
+                    @Html.RadioButtonFor(m => m._Currency, Db.Filter.Currency.USD)
+                    <label for="radio2">
+                        @Db.Filter.Currency.USD
+                    </label>
+                </div>
+            </div>
+        </div>  <!-- Currency Type -->
+
+        <hr />
+        <div class="row">
+            <div class="col-xs-1">
+                <div class="radio">
+                    @Html.RadioButtonFor(m => m._TerminalType, Db.Filter.Terminal.ALL, new { @checked = "checked" })
+                    <label for="radio1">
+                        @Db.Filter.Terminal.ALL
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-1">
+                <div class="radio">
+                    @Html.RadioButtonFor(m => m._TerminalType, Db.Filter.Terminal.ATM)
+                    <label for="radio1">
+                        @Db.Filter.Terminal.ATM
+                    </label>
+                </div>
+            </div>
+
+            <div class="col-xs-1">
+                <div class="radio">
+                    @Html.RadioButtonFor(m => m._TerminalType, Db.Filter.Terminal.POS)
+                    <label for="radio1">
+                        @Db.Filter.Terminal.POS
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-1">
+            </div>
+            <div class="col-xs-3">
+                <div class="dropdown" data-toggle="dropdown" id="navbarDropdownMenuLink1">
+                    @Html.DropDownListFor(model => model.TerminalId, ViewBag.DrpTerminalListData as List<SelectListItem>, "Please Select Terminal", new { @id = "drpReconType", @class = "form-control btn btn-default drpBackColor selectBox" })
+                    @Html.ValidationMessageFor(model => model.TerminalId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-xs-3">
+            </div>
+
+            <div class="col-xs-2">
+                <button type="submit" id="btnFilter" class="btn btn-default btn-fill btn-lg">Filter</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <hr />
+            <div class="stats">
+                <i class="ti-reload"></i> Select appropriate filters and click filter.
+            </div>
+        </div>
+    </div>
+</div>

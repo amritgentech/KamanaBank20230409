@@ -1,0 +1,13 @@
+ACCOUNTNO      # char 32 * account nuber maximum 32 digit padding left 
+CURRENCY       # CHAR 3  * NPR - local currency card or USD - international card 
+CNAME          # char 35 * name of the card holder padding left,
+ADDRESS        # char 50 * address do not use `;` (semi colon) padding left,
+CITY           # char 50 * do not use `;` (semi colon) padding left,
+EMAIL          # char 50 * padding left optional
+PHONENO        # char 30 * padding left optional if not present please use space
+MOBILE         # char 30 * padding left optional if not present please use space 
+ENDFLAG	       # CHAR 1  * PIPE SYMBOL (|)
+
+sample data:
+
+12345678901234567890123456789012NPRNBBTESTCARDUSER                    NBB ADDRESS                                       KATHMANDU                                         email@email.com                                                                 9999999999                    |

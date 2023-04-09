@@ -1,0 +1,59 @@
+﻿@model Db.Model.ReportMaster
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ReportMaster</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Categories.Name)
+
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Categories.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportTypes.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportTypes.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Query)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Query)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DatabaseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DatabaseName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "List", "ReportMasters")
+</p>

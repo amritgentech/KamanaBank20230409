@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.MenuTitle = "Settled";
+}
+@*<style>
+
+    #tablesettlement tr:hover {
+        background-color: #EEA47FFF;
+    }
+
+    #tablesettlement td {
+        color: white;
+    }
+
+    #tablesettlement tbody {
+        background-color: #6E6E6DFF;
+    }
+</style>*@
+<div id="successNotify">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong></strong>Transactions are successfully settled
+</div>
+<div id="errorNotify">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <strong></strong> Some error occurred
+</div>
+<div class="content indexPartial">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="content">
+                        <div class="row ">
+                            <table id="tablesettlement" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="7"></th>
+                                        <th colspan="2">VISA</th>
+                                        <th colspan="2">NPN</th>
+                                        <th colspan="2">CBS</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Remarks</th>
+                                        <th>Date</th>
+                                        <th>Terminal</th>
+                                        <th>Card No</th>
+                                        <th>Trace No</th>
+                                        <th>Status</th>
+                                        <th>ONUS/OFFUS</th>
+                                        <th class="rightTextAlign">Amount</th>
+                                        <th class="centerTextAlign">Response Code</th>
+                                        <th class="rightTextAlign">Amount</th>
+                                        <th class="centerTextAlign">Response Code</th>
+                                        <th class="rightTextAlign">Amount</th>
+                                        <th class="centerTextAlign">Response Code</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/proj/notify.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#successNotify").hide();
+        $("#errorNotify").hide();  // hide alert div..
+
+        if ('@TempData["Message"]' == "Success")
+        {
+            $("#successNotify").addClass("successAlert");
+            $("#successNotify").show();
+        }
+         if ('@TempData["Message"]' == "Error")
+        {
+             $("#errorNotify").addClass("errorAlert");
+             $("#errorNotify").show();
+        }
+
+        var oTable = $('#tablesettlement').dataTable({
+            "sScrollX": true,
+            "searching": true,
+             "serverSide": true,
+            "bServerSide": true,
+            "sAjaxSource": "/SettlementChecker/GetSettledTransactions",
+            "bProcessing": true,
+            "sServerMethod": "POST",
+            "aoColumns": [
+                { "mData": "Reason" },
+                { "mData": "TransactionDate" },
+                { "mData": "TerminalId" },
+                { "mData": "CardNo" },
+                { "mData": "TraceNo" },
+                { "mData": "Status" },
+                { "mData": "IsOwnUsPayableReceivable" },
+                { "mData": "VisaTransactionAmount" },
+                { "mData": "VisaResponseCode" },
+                { "mData": "NpnTransactionAmount" },
+                { "mData": "NpnResponseCode" },
+                { "mData": "CbsTransactionAmount" },
+                { "mData": "CbsResponseCode" }
+            ]
+        });
+    });
+</script>
+
+
+
+

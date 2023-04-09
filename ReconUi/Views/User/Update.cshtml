@@ -1,0 +1,17 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityUser
+@{
+    ViewBag.Title = "Update User";
+}
+<h2>Update User Role </h2>
+
+@using (Html.BeginForm())
+{
+    <p> Update User Role Name:</p>
+    @Html.HiddenFor(x => x.Id)
+    @Html.EditorFor(m => m.UserName)
+    <input type="submit" value="Update User" />
+}
+<div>
+    @Html.ActionLink("Back to Home", "Index", "User")
+</div>
+

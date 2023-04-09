@@ -1,0 +1,32 @@
+﻿@using ReconUi.Models
+@model IdentityRelatedModel
+
+<div class="col-md-12">
+    <table class="table" id="UserRoleTable" style="margin-top: 75px">
+        <thead>
+            <tr>
+                <th class="textCenter">Name</th>
+                <th class="textCenter">Role</th>
+                <th class="textCenter">Action</th>
+            </tr>
+            @foreach (var item in Model.IdentityRelatedModels)
+            {
+                <tr id="tr-@item.UserId">
+                    <td>
+                        @Html.TextBoxFor(x => x.UserName, new { Value = item.UserName, @class = "form-control clsUsername", disabled = "disabled" })
+                    </td>
+                    <td>
+                        <div>
+                            @Html.DropDownListFor(x => x.UserRoleId, new SelectList(Model.UserRolesList, "value", "text", item.UserRoleId), new { @class = "form-control bindLabelControl clsDrpRoles", disabled = "disabled" })
+                        </div>
+                    </td>
+                    <td>
+                        <button type="button" but-roleId="@item.UserRoleId" but-userId="@item.UserId" class="btn btn-success btnSave"><i class="fa fa-save"></i> Save</button>
+                        <button type="button" edit-role-Id="@item.UserRoleId" id=@item.UserId class="btn btn-warning EditUserRole"><i class="fa fa-save"></i> Edit</button>
+                        <a class="btn btn-primary btn-danger" href="/User/DeleteUserRole?userId=@item.UserId&roleId=@item.UserRoleId">Remove Role</a>
+                        <a class="btn btn-primary btn-danger" href="/User/Delete?userId=@item.UserId">Remove User</a>
+                    </td>
+                </tr>
+            }
+    </table>
+</div>

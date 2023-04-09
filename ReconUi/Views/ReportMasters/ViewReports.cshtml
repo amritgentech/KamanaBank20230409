@@ -1,0 +1,73 @@
+﻿@model IList<ReconUi.DTO.ParametersDTO>
+@{
+    ViewBag.Title = "ViewReports";
+    ViewBag.MenuTitle = " " +@ViewBag.RptName;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card search-content" style="padding:10px;">
+        <div class="row">
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                <div class="col-md-3">
+                    @Html.HiddenFor(x => Model[i].QueryOfMasterReport)
+                    @Html.HiddenFor(x => Model[i].ReportMasterId)
+                    @Html.HiddenFor(x => Model[i].Label)
+                    @Html.HiddenFor(x => Model[i].DisplayName)
+                    @Html.HiddenFor(x => Model[i].Query)
+                    @Html.HiddenFor(x => Model[i].ParameterDataType)
+                    <label>@Model[i].DisplayName</label>
+                    @if (Model[i].ParameterDataType == Db.Enum.ParameterDataType.Date)
+                    {
+                        @Html.TextBoxFor(x => Model[i].SearchValue,
+                                     new { @type = "date", @class = "form-control" });
+                    }
+                    else if (Model[i].ParameterDataType == Db.Enum.ParameterDataType.String)
+                    {
+                        @Html.TextBoxFor(x => Model[i].SearchValue,
+                                     new { @type = "text", @class = "form-control" });
+                    }
+                    else if (Model[i].ParameterDataType == Db.Enum.ParameterDataType.Number)
+                    {
+                        @Html.TextBoxFor(x => Model[i].SearchValue,
+                                     new { @type = "number", @class = "form-control" });
+                    }
+                    else if (Model[i].ParameterDataType == Db.Enum.ParameterDataType.DropDown)
+                    {
+                        @Html.DropDownListFor(x => Model[i].SearchValue, Model[i].DDL, new { @class = "form-control" })
+                    }
+                </div>
+            }
+
+        </div>
+        <hr />
+            <div class="text-right">
+                @Html.ActionLink("Back to Reports", "Index", "ReportMasters", new { id = @ViewBag.CategoryId }, new { @class = "btn btn-primary btn-sm",@style="float:left" })
+                <input type="submit" value="Show" class="btn btn-success" />
+            </div>
+    </div>
+}
+@Html.Raw(ViewBag.Table)
+
+
+<script>
+    var fileName = "@ViewBag.RptName" + "-" + (new Date()).toLocaleDateString('en-US');
+;
+    $('#grid').dataTable({
+        dom: 'Bfrtip',
+        language: {
+            searchPlaceholder: "Search records"
+        },
+        buttons: [
+            {
+                extend: 'excel',
+                title: fileName,
+
+            }
+        ]
+    });
+    $('.buttons-excel').addClass("btn btn-primary btn-right");
+    $('.buttons-excel').text("Download");
+</script>

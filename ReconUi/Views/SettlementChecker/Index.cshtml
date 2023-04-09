@@ -1,0 +1,84 @@
+﻿@using Db
+@model SettlementViewModel
+
+@{
+    ViewBag.Title = "Settlement Checker";
+    ViewBag.MenuTitle = "Settlement-Checker";
+}
+    <div id="errorNotify">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong></strong>  Please Check CheckBox to select Transactions to settle
+    </div>
+<div class="content indexPartial">
+    <div class="container-fluid">
+        <div class="row">
+            @using (Html.BeginForm("Filter", "SettlementChecker", FormMethod.Post, new { id = "headerSearch", enctype = "multipart /form-data" }))
+            {
+                <div class="col-md-12">
+
+                    @Html.Partial("~/Views/Shared/_SettlementFilter.cshtml", Model._Filter)
+                </div>
+            }
+        </div>
+        @using (Html.BeginForm("CheckerUpdateTransactions", "SettlementChecker", FormMethod.Post, new { id = "formsettlementchecker", enctype = "multipart/form-data" }))
+        {
+            <div id="checkerrow">
+                @if (Model.ListSettlements.Count > 0)
+                {
+                <div class="col-md-12">
+                    <button style="display: inline-block;float: left; margin-bottom: 23px;" class="btn btn-info" id="updateBtn">
+                        Update
+                    </button>
+                    <div class="col-xs-5">
+                      
+                    </div>
+                    <div class="col-xs-5">
+                        <input class="form-control" type="text" placeholder="Search " id="searchinput">
+                    </div>
+                </div>
+                }
+                <div class="col-md-12">
+                    @Html.HiddenFor(m => m._Filter.FromDate)
+                    @Html.HiddenFor(m => m._Filter.ToDate)
+                    @Html.HiddenFor(m => m._Filter.TerminalId)
+                    @Html.Partial("~/Views/SettlementChecker/_VisaVsNPNVsCbs.cshtml", Model.ListSettlements)
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/Scripts/proj/notify.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+       if ('@ViewBag.Message' != 'Success'){
+           $('#checkerrow').hide();
+        };
+
+        $("span .fa-square").hide();
+        $("span .fa-check-square").hide();
+        $("#errorNotify").hide();  
+        $('.checkid').prop('checked', false);
+
+        $("#searchinput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#recon-table tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $('#updateBtn').on('click', function (e) {
+            if ($('#recon-table input[type=checkbox]:checked').length === $('#recon-table input[type=checkbox]:disabled').length) {
+                e.preventDefault();
+                $("#errorNotify").addClass("errorAlert");
+                $("#errorNotify").show();
+
+            }
+        });
+    });
+</script>
+
+
+

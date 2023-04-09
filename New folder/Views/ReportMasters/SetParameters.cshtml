@@ -1,0 +1,30 @@
+﻿@model IList<ReconUi.DTO.ParametersDTO>
+@{
+    ViewBag.Title = "SetParameters";
+}
+
+<h2>SetParameters</h2>
+@using (Html.BeginForm())
+{
+
+
+    @Html.AntiForgeryToken()
+    for (int i = 0; i < Model.Count(); i++)
+    {
+        @Html.HiddenFor(x => Model[i].QueryOfMasterReport)
+        @Html.HiddenFor(x => Model[i].ReportMasterId)
+        <label>Label</label>
+        @Html.TextBoxFor(x => Model[i].Label)
+        <label>Display</label>
+        @Html.TextBoxFor(x => Model[i].DisplayName)
+        <label>Query if Dropdown</label>
+        @Html.TextBoxFor(x => Model[i].Query)
+        <label>Datatype</label>
+        @Html.EnumDropDownListFor(
+    x => Model[i].ParameterDataType,
+    "Select Data Type",
+    new { @class = "form-control" })
+
+    }
+    <input type="submit" value="Save" class="btn btn-default" />
+}

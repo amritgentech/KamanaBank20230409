@@ -1,0 +1,72 @@
+﻿@using Db
+
+@model Report
+
+@{
+    ViewBag.Title = "Report";
+    ViewBag.MenuTitle = "Report";
+}
+
+    <div id="reportIndexPage">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    @using (Html.BeginForm("Filter", "Report", FormMethod.Post, new { id = "headerSearch", enctype = "multipart/form-data" }))
+                    {
+                        <div class="col-md-12">
+                            @Html.Partial("~/Views/Shared/_Filter.cshtml", Model._Filter)
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h6>@Model._Filter.IsOwnUsPayableReceivable</h6>
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.Partial("~/Views/Shared/_Summary.cshtml", @Model._Summary)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-9">
+                    </div>
+                    <div class="col-md-3">
+                        <button style="display: inline-block;float: right; margin-bottom: 23px;" id="btnExport">
+                            <img src="/Content/images/ExportButton.gif" style="float: right; margin-right: 0.5em; height: 20px;">Export Excel
+                        </button>
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(Model._Filter.currentPartial))
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Transactions Detail</h4>
+                                    <p class="category">Transactions between @Model._Filter.FromDate and @Model._Filter.ToDate</p>
+                                </div>
+                                <div class="content">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @Html.Partial(Model._Filter.currentPartial)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+@section scripts
+{
+
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/proj/summary.js"></script>
+}
